@@ -29,7 +29,8 @@ services:
         - MERCURE_SUBSCRIBE_URL=${HTTP_OR_SSL}mercure.${DOMAIN_NAME}$$
         - MERCURE_PUBLISH_URL=${HTTP_OR_SSL}mercure.${DOMAIN_NAME}$$
         - MERCURE_JWT_SECRET=${JWT_KEY}
-  
+        - MERCURE_JWT_TOKEN=${MERCURE_JWT_TOKEN}
+
     volumes:
       - ./api:/srv/api:rw,cached
     <<: *network
@@ -90,6 +91,7 @@ services:
     image: ${CONTAINER_REGISTRY_BASE}/client
     build:
       context: ./client
+      target: api_platform_client_development
       cache_from:
         - ${CONTAINER_REGISTRY_BASE}/client
     volumes:
@@ -109,6 +111,7 @@ services:
     image: ${CONTAINER_REGISTRY_BASE}/admin
     build:
       context: ./admin
+      target: api_platform_admin_development
       cache_from:
         - ${CONTAINER_REGISTRY_BASE}/admin
     environment:
