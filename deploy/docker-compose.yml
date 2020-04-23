@@ -1,0 +1,22 @@
+version: '3.4'
+
+services:
+  traefik:
+    image: traefik:v1.7
+    command: --api --docker
+    ports:
+      - "80:80"
+      - "443:443"
+      - "8080:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    # load a TOML configuration file and to generate Let's Encrypt certificated as explained in https://docs.traefik.io/user-guide/docker-and-lets-encrypt/
+      - ./traefik.toml:/traefik.toml
+      - ./acme.json:/acme.json
+    networks:
+      - proxy
+    # Add other networks here
+
+networks:
+  proxy:
+    external: true
