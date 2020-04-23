@@ -46,6 +46,9 @@ services:
     volumes:
       - ./api/public:/srv/api/public:ro
     labels:
+      - traefik.enable=true
+      - traefik.docker.network=proxy
+      - traefik.port=80
       - traefik.frontend.rule=Host:api.${DOMAIN_NAME}
     <<: *network
 
@@ -62,6 +65,9 @@ services:
     tmpfs:
       - /usr/local/var/varnish:exec
     labels:
+      - traefik.enable=true
+      - traefik.docker.network=proxy
+      - traefik.port=80
       - traefik.frontend.rule=Host:cache.${DOMAIN_NAME}
     <<: *network
 
@@ -84,6 +90,9 @@ services:
       - PUBLISH_ALLOWED_ORIGINS=${HTTP_OR_SSL}
       - DEMO=1
     labels:
+      - traefik.enable=true
+      - traefik.docker.network=proxy
+      - traefik.port=80
       - traefik.frontend.rule=Host:mercure.${DOMAIN_NAME}
     <<: *network
 
@@ -102,6 +111,8 @@ services:
     labels:
       - traefik.frontend.rule=Host:${DOMAIN_NAME},www.${DOMAIN_NAME}
       - traefik.port=3000
+      - traefik.enable=true
+      - traefik.docker.network=proxy
     environment:
       # You should remove this variable from .env into client folder
       - REACT_APP_API_ENTRYPOINT=${HTTP_OR_SSL}api.${DOMAIN_NAME}
@@ -125,6 +136,8 @@ services:
     labels:
       - traefik.frontend.rule=Host:admin.${DOMAIN_NAME}
       - traefik.port=3000
+      - traefik.enable=true
+      - traefik.docker.network=proxy
     <<: *network
 
 volumes:
