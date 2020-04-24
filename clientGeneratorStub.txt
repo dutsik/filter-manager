@@ -1,0 +1,119 @@
+Code for the "FilterAnalog" resource type has been generated!
+Paste the following definitions in your application configuration (`client/src/index.js` by default):
+
+// import reducers
+import filteranalog from './reducers/filteranalog/';
+
+//import routes
+import filteranalogRoutes from './routes/filteranalog';
+
+// Add the reducer
+combineReducers({ filteranalog,/* ... */ }),
+
+// Add routes to <Switch>
+{ filteranalogRoutes }
+
+Code for the "FilterGroup" resource type has been generated!
+Paste the following definitions in your application configuration (`client/src/index.js` by default):
+
+// import reducers
+import filtergroup from './reducers/filtergroup/';
+
+//import routes
+import filtergroupRoutes from './routes/filtergroup';
+
+// Add the reducer
+combineReducers({ filtergroup,/* ... */ }),
+
+// Add routes to <Switch>
+{ filtergroupRoutes }
+
+Code for the "FilterType" resource type has been generated!
+Paste the following definitions in your application configuration (`client/src/index.js` by default):
+
+// import reducers
+import filtertype from './reducers/filtertype/';
+
+//import routes
+import filtertypeRoutes from './routes/filtertype';
+
+// Add the reducer
+combineReducers({ filtertype,/* ... */ }),
+
+// Add routes to <Switch>
+{ filtertypeRoutes }
+
+Code for the "Filter" resource type has been generated!
+Paste the following definitions in your application configuration (`client/src/index.js` by default):
+
+// import reducers
+import filter from './reducers/filter/';
+
+//import routes
+import filterRoutes from './routes/filter';
+
+// Add the reducer
+combineReducers({ filter,/* ... */ }),
+
+// Add routes to <Switch>
+{ filterRoutes }
+
+Code for the "AutoBrand" resource type has been generated!
+Paste the following definitions in your application configuration (`client/src/index.js` by default):
+
+// import reducers
+import autobrand from './reducers/autobrand/';
+
+//import routes
+import autobrandRoutes from './routes/autobrand';
+
+// Add the reducer
+combineReducers({ autobrand,/* ... */ }),
+
+// Add routes to <Switch>
+{ autobrandRoutes }
+
+Code for the "AutoType" resource type has been generated!
+Paste the following definitions in your application configuration (`client/src/index.js` by default):
+
+// import reducers
+import autotype from './reducers/autotype/';
+
+//import routes
+import autotypeRoutes from './routes/autotype';
+
+// Add the reducer
+combineReducers({ autotype,/* ... */ }),
+
+// Add routes to <Switch>
+{ autotypeRoutes }
+
+Code for the "AutoModel" resource type has been generated!
+Paste the following definitions in your application configuration (`client/src/index.js` by default):
+
+// import reducers
+import automodel from './reducers/automodel/';
+
+//import routes
+import automodelRoutes from './routes/automodel';
+
+// Add the reducer
+combineReducers({ automodel,/* ... */ }),
+
+// Add routes to <Switch>
+{ automodelRoutes }
+
+Code for the "Auto" resource type has been generated!
+Paste the following definitions in your application configuration (`client/src/index.js` by default):
+
+// import reducers
+import auto from './reducers/auto/';
+
+//import routes
+import autoRoutes from './routes/auto';
+
+// Add the reducer
+combineReducers({ auto,/* ... */ }),
+
+// Add routes to <Switch>
+{ autoRoutes }

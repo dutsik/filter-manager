@@ -1,148 +1,141 @@
 version: '3.4'
 
-x-cache:
-  &cache
-  cache_from:
-    - ${CONTAINER_REGISTRY_BASE}/php
-    - ${CONTAINER_REGISTRY_BASE}/nginx
-    - ${CONTAINER_REGISTRY_BASE}/varnish
-
-x-network:
-  &network
-  networks:
-      - proxy
+x-cache-from:
+  - &api-cache-from
+    cache_from:
+      - ${NGINX_IMAGE:-quay.io/api-platform/nginx}
+      - ${PHP_IMAGE:-quay.io/api-platform/php}
 
 services:
   php:
-    image: ${CONTAINER_REGISTRY_BASE}/php
     build:
       context: ./api
       target: api_platform_php
-      <<: *cache
+      <<: *api-cache-from
+    image: ${PHP_IMAGE:-quay.io/api-platform/php}
+    healthcheck:
+      interval: 10s
+      timeout: 3s
+      retries: 3
+      start_period: 30s
     depends_on:
       - db
-    environment:
-        # You should remove these variables from .env into api folder
-        - TRUSTED_HOSTS=^(((${SUBDOMAINS_LIST}\.)?${DOMAIN_NAME})|api)$$
-        - CORS_ALLOW_ORIGIN=^${HTTP_OR_SSL}(${SUBDOMAINS_LIST}.)?${DOMAIN_NAME}$$
-        - DATABASE_URL=postgres://${DB_USER}:${DB_PASS}@db/${DB_NAME}
-        - MERCURE_SUBSCRIBE_URL=${HTTP_OR_SSL}mercure.${DOMAIN_NAME}$$
-        - MERCURE_PUBLISH_URL=${HTTP_OR_SSL}mercure.${DOMAIN_NAME}$$
-        - MERCURE_JWT_SECRET=${JWT_KEY}
-        - MERCURE_JWT_TOKEN=${MERCURE_JWT_TOKEN}
-
+      - dev-tls
     volumes:
       - ./api:/srv/api:rw,cached
-    <<: *network
+      - ./api/docker/php/conf.d/api-platform.dev.ini/:/usr/local/etc/php/conf.d/api-platform.ini
+      # if you develop on Linux, you may use a bind-mounted host directory instead
+      # - ./api/var:/srv/api/var:rw
+      - dev-certs:/certs:ro,nocopy
 
   api:
-    image: ${CONTAINER_REGISTRY_BASE}/nginx
     build:
       context: ./api
       target: api_platform_nginx
-      <<: *cache
+      <<: *api-cache-from
+    image: ${NGINX_IMAGE:-quay.io/api-platform/nginx}
     depends_on:
       - php
     volumes:
       - ./api/public:/srv/api/public:ro
-    labels:
-      - traefik.enable=true
-      - traefik.docker.network=proxy
-      - traefik.port=80
-      - traefik.frontend.rule=Host:api.${DOMAIN_NAME}
-    <<: *network
 
-  cache-proxy:
-    image: ${CONTAINER_REGISTRY_BASE}/varnish
-    build:
-      context: ./api
-      target: api_platform_varnish
-      <<: *cache
+  vulcain:
+    image: dunglas/vulcain
+    environment:
+      - CERT_FILE=/certs/localhost.crt
+      - KEY_FILE=/certs/localhost.key
+      - UPSTREAM=http://api
     depends_on:
       - api
+      - dev-tls
     volumes:
-      - ./api/docker/varnish/conf:/usr/local/etc/varnish:ro
-    tmpfs:
-      - /usr/local/var/varnish:exec
-    labels:
-      - traefik.enable=true
-      - traefik.docker.network=proxy
-      - traefik.port=80
-      - traefik.frontend.rule=Host:cache.${DOMAIN_NAME}
-    <<: *network
+      - dev-certs:/certs:ro,nocopy
+    ports:
+      - target: 443
+        published: 8443
+        protocol: tcp
 
   db:
     image: postgres:12-alpine
     environment:
-      - POSTGRES_DB=${DB_NAME}
-      - POSTGRES_USER=${DB_USER}
-      - POSTGRES_PASSWORD=${DB_PASS}
+      - POSTGRES_DB=api
+      - POSTGRES_PASSWORD=!ChangeMe!
+      - POSTGRES_USER=api-platform
     volumes:
-      - dbdata:/var/lib/postgresql/data:rw
-    <<: *network
+      - db-data:/var/lib/postgresql/data:rw
+      # you may use a bind-mounted host directory instead, so that it is harder to accidentally remove the volume and lose all your data!
+      # - ./api/docker/db/data:/var/lib/postgresql/data:rw
+    ports:
+      - target: 5432
+        published: 5432
+        protocol: tcp
 
   mercure:
     image: dunglas/mercure
     environment:
-      - JWT_KEY=${JWT_KEY}
-      - ALLOW_ANONYMOUS=0
-      - CORS_ALLOWED_ORIGINS=^${HTTP_OR_SSL}(${SUBDOMAINS_LIST}.)?${DOMAIN_NAME}$$
-      - PUBLISH_ALLOWED_ORIGINS=${HTTP_OR_SSL}
+      - ALLOW_ANONYMOUS=1
+      - CERT_FILE=/certs/localhost.crt
+      - CORS_ALLOWED_ORIGINS=*
       - DEMO=1
-    labels:
-      - traefik.enable=true
-      - traefik.docker.network=proxy
-      - traefik.port=80
-      - traefik.frontend.rule=Host:mercure.${DOMAIN_NAME}
-    <<: *network
+      - JWT_KEY=!ChangeMe!
+      - KEY_FILE=/certs/localhost.key
+      - PUBLISH_ALLOWED_ORIGINS=https://localhost:1337 # required for publishing from the demo page
+    depends_on:
+      - dev-tls
+    volumes:
+      - dev-certs:/certs:ro,nocopy
+    ports:
+      - target: 443
+        published: 1337
+        protocol: tcp
 
   client:
-    image: ${CONTAINER_REGISTRY_BASE}/client
     build:
       context: ./client
       target: api_platform_client_development
       cache_from:
-        - ${CONTAINER_REGISTRY_BASE}/client
+        - ${CLIENT_IMAGE:-quay.io/api-platform/client}
+    image: ${CLIENT_IMAGE:-quay.io/api-platform/client}
+    environment:
+      - API_PLATFORM_CLIENT_GENERATOR_ENTRYPOINT=http://api
+      - API_PLATFORM_CLIENT_GENERATOR_OUTPUT=src
+    depends_on:
+      - dev-tls
     volumes:
       - ./client:/usr/src/client:rw,cached
-      - /usr/src/client/node_modules
-    expose:
-      - 3000
-    labels:
-      - traefik.frontend.rule=Host:${DOMAIN_NAME},www.${DOMAIN_NAME}
-      - traefik.port=3000
-      - traefik.enable=true
-      - traefik.docker.network=proxy
-    environment:
-      # You should remove this variable from .env into client folder
-      - REACT_APP_API_ENTRYPOINT=${HTTP_OR_SSL}api.${DOMAIN_NAME}
-    <<: *network
+      - dev-certs:/usr/src/client/node_modules/webpack-dev-server/ssl:ro,nocopy
+    ports:
+      - target: 3000
+        published: 443
+        protocol: tcp
 
   admin:
-    image: ${CONTAINER_REGISTRY_BASE}/admin
     build:
       context: ./admin
       target: api_platform_admin_development
       cache_from:
-        - ${CONTAINER_REGISTRY_BASE}/admin
-    environment:
-      # You should remove this variable from .env into admin folder
-      - REACT_APP_API_ENTRYPOINT=${HTTP_OR_SSL}api.${DOMAIN_NAME}
+        - ${ADMIN_IMAGE:-quay.io/api-platform/admin}
+    image: ${ADMIN_IMAGE:-quay.io/api-platform/admin}
+    depends_on:
+      - dev-tls
     volumes:
       - ./admin:/usr/src/admin:rw,cached
-      - /usr/src/admin/node_modules
-    expose:
-      - 3000
-    labels:
-      - traefik.frontend.rule=Host:admin.${DOMAIN_NAME}
-      - traefik.port=3000
-      - traefik.enable=true
-      - traefik.docker.network=proxy
-    <<: *network
+      - dev-certs:/usr/src/admin/node_modules/webpack-dev-server/ssl:ro,nocopy
+    ports:
+      - target: 3000
+        published: 444
+        protocol: tcp
+
+  dev-tls:
+    build:
+      context: ./docker/dev-tls
+    volumes:
+      - dev-certs:/certs:rw
+    ports:
+      - target: 80
+        published: 80
+        protocol: tcp
 
 volumes:
-  dbdata: {}
-
-networks:
-  proxy:
-    external: true
+  db-data: {}
+  dev-certs: {}
