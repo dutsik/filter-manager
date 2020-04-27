@@ -2,9 +2,13 @@
 
 namespace App\Entity\Filter;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
 use App\Entity\Auto\Auto;
-use App\Entity\Auto\AutoModel;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\NumericFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\RangeFilter;
+
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -12,6 +16,13 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ApiResource()
  * @ORM\Entity(repositoryClass="App\Repository\Filter\FilterRepository")
+ * @ApiFilter(SearchFilter::class, properties={
+ *     "filterType.id": "exact",
+ *     "filterAnalog.name": "ipartial"
+ *     })
+ * @ApiFilter(NumericFilter::class)
+ * @ApiFilter(RangeFilter::class)
+ *
  */
 class Filter
 {

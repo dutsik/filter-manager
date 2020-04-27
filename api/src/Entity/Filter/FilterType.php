@@ -2,7 +2,9 @@
 
 namespace App\Entity\Filter;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -10,6 +12,9 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ApiResource()
  * @ORM\Entity(repositoryClass="App\Repository\Filter\FilterTypeRepository")
+ * @ApiFilter(SearchFilter::class, properties={
+ *     "filterGroup.id": "exact"
+ *     })
  */
 class FilterType
 {

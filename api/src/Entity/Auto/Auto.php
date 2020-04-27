@@ -2,8 +2,10 @@
 
 namespace App\Entity\Auto;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
-use App\Entity\Filter\Filter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+ use App\Entity\Filter\Filter;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -11,6 +13,10 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ApiResource()
  * @ORM\Entity(repositoryClass="App\Repository\Auto\AutoRepository")
+ * @ApiFilter(SearchFilter::class, properties={
+ *     "engine": "exact",
+ *     "model.id": "exact"
+ * })
  */
 class Auto
 {

@@ -2,7 +2,9 @@
 
 namespace App\Entity\Auto;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use App\Entity\Filter\Filter;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -11,6 +13,10 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ApiResource()
  * @ORM\Entity(repositoryClass="App\Repository\Auto\AutoModelRepository")
+ * @ApiFilter(SearchFilter::class, properties={
+ *     "brand.id": "exact",
+ *     "type.id": "exact"
+ *     })
  */
 class AutoModel
 {
@@ -32,13 +38,6 @@ class AutoModel
      */
     private $brand;
 
-
-
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Filter\Filter", mappedBy="aplicability")
-     */
-    private $filters;
-
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Auto\Auto", mappedBy="model", orphanRemoval=true)
      */
@@ -52,7 +51,6 @@ class AutoModel
 
     public function __construct()
     {
-        $this->filters = new ArrayCollection();
         $this->autos = new ArrayCollection();
     }
 
@@ -85,34 +83,6 @@ class AutoModel
         return $this;
     }
 
-
-    /**
-     * @return Collection|Filter[]
-     */
-    public function getFilters(): Collection
-    {
-        return $this->filters;
-    }
-
-    public function addFilter(Filter $filter): self
-    {
-        if (!$this->filters->contains($filter)) {
-            $this->filters[] = $filter;
-            $filter->addAplicability($this);
-        }
-
-        return $this;
-    }
-
-    public function removeFilter(Filter $filter): self
-    {
-        if ($this->filters->contains($filter)) {
-            $this->filters->removeElement($filter);
-            $filter->removeAplicability($this);
-        }
-
-        return $this;
-    }
 
     /**
      * @return Collection|Auto[]
