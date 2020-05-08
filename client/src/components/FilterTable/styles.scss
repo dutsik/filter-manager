@@ -1,0 +1,21 @@
+.filter-table {
+    margin-top: 40px;
+    table {
+        border: 2px solid #3f3e43;
+        border-collapse: collapse;
+        border-radius: 8px;
+
+    }
+
+    th {
+        padding: 12px;
+        border: 1px solid grey;
+    }
+    td {
+        padding: 12px; 
+    }
+    tr {
+        padding: 12px;
+        border: 1px solid grey;
+    }
+}

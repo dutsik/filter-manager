@@ -5,6 +5,7 @@ import {
   mercureSubscribe as subscribe
 } from '../../utils/dataAccess';
 import { success as deleteSuccess } from './delete';
+import { API } from '../../config/routes';
 
 export function error(error) {
   return { type: 'AUTO_LIST_ERROR', error };
@@ -23,7 +24,7 @@ export function list(page = 'autos') {
     dispatch(loading(true));
     dispatch(error(''));
 
-    fetch(page)
+    fetch(`${API}${page}`)
       .then(response =>
         response
           .json()
