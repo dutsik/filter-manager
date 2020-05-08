@@ -6,6 +6,7 @@ import polyglotI18nProvider from 'ra-i18n-polyglot';
 import * as domainMessages from './i18n';
 import FilterGroup from "./components/filter-group";
 import FilterType from "./components/filter-type";
+import Filter from "./components/filter";
 
 const messages = {
   be: { ...belarusianMessages, ...domainMessages.be },
@@ -26,7 +27,7 @@ export default () =>
 
   return (
     <HydraAdmin i18nProvider={i18nProvider} entrypoint={process.env.REACT_APP_API_ENTRYPOINT}>
-
+      <Filter name="filters" />
       <FilterGroup name="filter_groups"
       />
       <FilterType name="filter_types"

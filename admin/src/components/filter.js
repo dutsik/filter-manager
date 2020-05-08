@@ -8,39 +8,43 @@ import {
   ShowGuesser
 } from "@api-platform/admin";
 import React from "react";
-import { ReferenceInput, AutocompleteInput, TextField, ReferenceField } from "react-admin";
+import { ReferenceInput, AutocompleteInput, TextField, ReferenceField, ReferenceFieldController } from "react-admin";
+import { useTranslate } from 'react-admin';
 
-const FilterList = props => (
-  <ListGuesser {...props}>
-    <FieldGuesser source={"name"} />
-    <FieldGuesser source={"description"} />
-    <FieldGuesser source={"slug"} />
-    <ReferenceField label="Account" source="account" reference="accounts">
-      <TextField source="slug" />
-    </ReferenceField>
-  </ListGuesser>
-);
+
+
+const FilterList = props => {
+  const translate = useTranslate();
+  return (<ListGuesser {...props}>
+      <FieldGuesser source={"name"}/>
+      <ReferenceField source="filterType" reference="filter_types">
+        <TextField source="name"/>
+      </ReferenceField>
+      <ReferenceFieldController label={translate('resources.filters.fields.filterGroup')} reference="filter_types" source="filterType"
+                                link={false}>
+        {({referenceRecord, ...props}) => (
+          <ReferenceField basePath="/filter_groups" resource="filter_types" reference="filter_groups"
+                          source="filterGroup" record={referenceRecord || {}} link="show">
+            <TextField source="name"/>
+          </ReferenceField>
+        )}
+      </ReferenceFieldController>
+
+    </ListGuesser>
+  )
+};
 const FilterShow= props => (
   <ShowGuesser  {...props}>
     <FieldGuesser source={"name"}  addLabel={true}/>
     <FieldGuesser source={"slug"} addLabel={true}/>
-    <ReferenceField label="Account" source="account" reference="accounts">
-      <TextField source="slug" />
-    </ReferenceField>
+
   </ShowGuesser >
 );
 
 const FilterCreate = props => (
   <CreateGuesser {...props}>
     <InputGuesser source="name" />
-    <ReferenceInput
-      source="account"
-      reference="accounts"
-      label="account"
-      filterToQuery={searchText => ({ account: searchText })}
-    >
-      <AutocompleteInput optionText="slug" />
-    </ReferenceInput>
+
 
     <InputGuesser source="description" />
     <InputGuesser source="slug" />
@@ -49,14 +53,7 @@ const FilterCreate = props => (
 const FilterEdit = props => (
   <EditGuesser  {...props}>
     <InputGuesser source="name" />
-    <ReferenceInput
-      source="account"
-      reference="accounts"
-      label="account"
-      filterToQuery={searchText => ({ account: searchText })}
-    >
-      <AutocompleteInput optionText="slug" />
-    </ReferenceInput>
+
 
     <InputGuesser source="description" />
     <InputGuesser source="slug" />

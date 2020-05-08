@@ -34,11 +34,11 @@ const FilterGroupList = props => (
 const FilterGroupShow = props => (
   <ShowGuesser  {...props}>
     <FieldGuesser source={"name"} addLabel={true}/>
-    <ReferenceManyField source="filterTypes" reference="filter_types">
+    <ReferenceArrayField source="filterTypes" reference="filter_types">
       <SingleFieldList>
         <ChipField  source="name"/>
       </SingleFieldList>
-    </ReferenceManyField>
+    </ReferenceArrayField>
   </ShowGuesser>
 );
 
