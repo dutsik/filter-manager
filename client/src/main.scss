@@ -1,0 +1,29 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,700|Roboto+Slab:300,700');
+
+body {
+    margin: 0;
+}
+
+a {
+    color: #3f3e43;
+    line-height: 1;
+    text-decoration: none;
+    &:active {
+        color: #3f3e43;
+        text-decoration: none;
+    }
+    &:hover {
+        color: #3f3e43;
+        text-decoration: none;
+    }
+}
+
+/***** GLOBAL *****/
+
+.custom-container {
+    margin: auto;
+    max-width: 1200px;
+    padding: 0 30px;
+    width: 100%;
+    position: relative;
+}

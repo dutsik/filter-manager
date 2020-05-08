@@ -1,0 +1,32 @@
+.cars-form {
+    margin-top: 40px;
+    padding: 16px;
+    border: 2px solid #3f3e43;
+    border-radius: 8px;
+    width: 100%;
+
+    &__select {
+        display: flex;
+        margin-bottom: 10px;
+
+        select {
+            width: 100%;
+        }
+
+    }
+
+    .select-title {
+        @media (max-width: 576px) {
+            font-size: 16px;
+            margin-right: 0px;
+            min-width: inherit;
+        }
+        margin-right: 20px;
+        min-width: 10%;
+        font-size: 24px;
+    }
+
+    .model-info-title {
+        font-size: 24px; 
+    }
+}

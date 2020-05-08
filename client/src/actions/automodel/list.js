@@ -4,6 +4,7 @@ import {
   extractHubURL,
   mercureSubscribe as subscribe
 } from '../../utils/dataAccess';
+import { API } from '../../config/routes';
 import { success as deleteSuccess } from './delete';
 
 export function error(error) {
@@ -23,7 +24,7 @@ export function list(page = 'auto_models') {
     dispatch(loading(true));
     dispatch(error(''));
 
-    fetch(page)
+    fetch(`${API}${page}`)
       .then(response =>
         response
           .json()

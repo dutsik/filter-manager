@@ -15,13 +15,31 @@ import 'bootstrap/dist/css/bootstrap.css';
 import '@fortawesome/fontawesome-free/css/all.css';
 import * as serviceWorker from './serviceWorker';
 // Import your reducers and routes here
-import Welcome from './Welcome';
+import HeaderClient from './components/HeaderClient';
+import CarsForm from './components/CarsForm';
+import App from './App';
+import './main.scss'
 
+
+
+import automodel from './reducers/automodel/';
+import autotype from './reducers/autotype/';
+import autobrand from './reducers/autobrand/';
+import filtergroup from './reducers/filtergroup';
+import filter from './reducers/filter';
+import auto from './reducers/auto/';
 const history = createBrowserHistory();
 const store = createStore(
   combineReducers({
     router: connectRouter(history),
     form,
+    automodel,
+    autotype,
+    autobrand,
+    auto,
+    filtergroup,
+    filter
+
     /* Add your reducers here */
   }),
   applyMiddleware(routerMiddleware(history), thunk)
@@ -30,10 +48,10 @@ const store = createStore(
 ReactDOM.render(
   <Provider store={store}>
     <ConnectedRouter history={history}>
+      <HeaderClient />
       <Switch>
-        <Route path="/" component={Welcome} strict={true} exact={true}/>
+        <Route path="/auto_types/:id" component={CarsForm} exact />
         {/* Add your routes here */}
-        <Route render={() => <h1>Not Found</h1>} />
       </Switch>
     </ConnectedRouter>
   </Provider>,
