@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ApiResource()
  * @ORM\Entity(repositoryClass="App\Repository\Auto\AutoBrandRepository")
- * @ApiFilter(SearchFilter::class, properties={"name": "exact"})
+ * @ApiFilter(SearchFilter::class, properties={"name": "ipartial"})
  */
 class AutoBrand
 {

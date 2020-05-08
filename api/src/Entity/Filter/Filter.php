@@ -90,7 +90,7 @@ class Filter
     private $autos;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Filter\FilterAnalog", mappedBy="filters")
+     * @ORM\OneToMany(targetEntity="App\Entity\Filter\FilterAnalog", mappedBy="filter")
      */
     private $filterAnalogs;
 

@@ -90,7 +90,7 @@ class Auto
     {
         if (!$this->filters->contains($filter)) {
             $this->filters[] = $filter;
-            $filter->addApplicability($this);
+            $filter->addAuto($this);
         }
 
         return $this;
@@ -100,7 +100,7 @@ class Auto
     {
         if ($this->filters->contains($filter)) {
             $this->filters->removeElement($filter);
-            $filter->removeApplicability($this);
+            $filter->removeAuto($this);
         }
 
         return $this;
