@@ -18,7 +18,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass="App\Repository\Filter\FilterRepository")
  * @ApiFilter(SearchFilter::class, properties={
  *     "filterType.id": "exact",
- *     "filterAnalog.name": "ipartial"
+ *     "filterAnalogs.name": "partial",
+ *     "filterAnalogs": "exact",
  *     })
  * @ApiFilter(NumericFilter::class)
  * @ApiFilter(RangeFilter::class)
