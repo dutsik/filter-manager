@@ -272,7 +272,6 @@ class Filter
     {
         if (!$this->filterAnalogs->contains($filterAnalog)) {
             $this->filterAnalogs[] = $filterAnalog;
-            $filterAnalog->addFilter($this);
         }
 
         return $this;
@@ -282,7 +281,6 @@ class Filter
     {
         if ($this->filterAnalogs->contains($filterAnalog)) {
             $this->filterAnalogs->removeElement($filterAnalog);
-            $filterAnalog->removeFilter($this);
         }
 
         return $this;
