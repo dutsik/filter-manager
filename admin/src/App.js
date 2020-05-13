@@ -32,7 +32,7 @@ export default () =>
 
 
   return (
-    <HydraAdmin i18nProvider={i18nProvider} entrypoint={"https://localhost:8443"}>
+    <HydraAdmin i18nProvider={i18nProvider} entrypoint={process.env.REACT_APP_API_ENTRYPOINT}>
       <Filter name="filters" />
       <FilterGroup name="filter_groups"
       />
