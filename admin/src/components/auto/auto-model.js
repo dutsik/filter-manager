@@ -16,12 +16,18 @@ const AutoModelList = props => (
     <ReferenceField  source="brand" reference="auto_brands">
       <TextField source="name" />
     </ReferenceField>
+    <ReferenceField  source="type" reference="auto_types">
+      <TextField source="name" />
+    </ReferenceField>
   </ListGuesser>
 );
 const AutoModelShow= props => (
   <ShowGuesser  {...props}>
     <FieldGuesser source={"name"}  addLabel={true}/>
     <ReferenceField  source="brand" reference="auto_brands">
+      <TextField source="name" />
+    </ReferenceField>
+    <ReferenceField  source="type" reference="auto_types">
       <TextField source="name" />
     </ReferenceField>
   </ShowGuesser >
@@ -36,6 +42,12 @@ const AutoModelCreate = props => (
     >
       <AutocompleteInput optionText="name" />
     </ReferenceInput>
+    <ReferenceInput
+      source="type" reference="auto_types"
+      filterToQuery={searchText => ({ type: searchText })}
+    >
+      <AutocompleteInput optionText="name" />
+    </ReferenceInput>
   </CreateGuesser>
 );
 const AutoModelEdit = props => (
@@ -44,6 +56,12 @@ const AutoModelEdit = props => (
     <ReferenceInput
       source="brand" reference="auto_brands"
       filterToQuery={searchText => ({ name: searchText })}
+    >
+      <AutocompleteInput optionText="name" />
+    </ReferenceInput>
+    <ReferenceInput
+      source="type" reference="auto_types"
+      filterToQuery={searchText => ({ type: searchText })}
     >
       <AutocompleteInput optionText="name" />
     </ReferenceInput>
