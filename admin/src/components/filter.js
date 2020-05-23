@@ -8,7 +8,7 @@ import {
   ShowGuesser
 } from "@api-platform/admin";
 import React from "react";
-import { ReferenceInput, AutocompleteInput, TextField, ReferenceField, ReferenceFieldController,ReferenceArrayInput, SelectArrayInput,SelectInput  } from "react-admin";
+import { ReferenceInput, AutocompleteInput, NumberInput, TextField, ReferenceField, ReferenceFieldController,ReferenceArrayInput, SelectArrayInput,SelectInput  } from "react-admin";
 import { useTranslate } from 'react-admin';
 
 
@@ -38,6 +38,7 @@ const FilterList = props => {
       <FieldGuesser source={"l"}/>
       <FieldGuesser source={"b"}/>
       <FieldGuesser source={"h"}/>
+      <FieldGuesser source={"comments"}/>
     </ListGuesser>
   )
 };
@@ -67,6 +68,7 @@ const FilterShow= props => {
     <FieldGuesser source={"l"} addLabel={true}/>
     <FieldGuesser source={"b"} addLabel={true}/>
     <FieldGuesser source={"h"} addLabel={true}/>
+    <FieldGuesser source={"comments"}  addLabel={true}/>
   </ShowGuesser>);
 };
 
@@ -80,15 +82,33 @@ const FilterCreate = props => (
       <SelectInput  optionText={((record)=> { return record.name})}/>
     </ReferenceInput >
 
-    <InputGuesser source="d"/>
-    <InputGuesser source="d1"/>
-    <InputGuesser source="d2"/>
-    <InputGuesser source="d3"/>
+    <InputGuesser
+      source="d"
+      parse={(value) => (value.replace(",", "."))}
+      format={(value) => ((value === undefined) ? '': value.toString().replace(".", ","))}
+    />
+    <InputGuesser
+      source="d1"
+      parse={(value) => (value.replace(",", "."))}
+      format={(value) => ((value === undefined) ? '': value.toString().replace(".", ","))}
+    />
+    <InputGuesser
+      source="d2"
+      parse={(value) => (value.replace(",", "."))}
+      format={(value) => ((value === undefined) ? '': value.toString().replace(".", ","))}
+    />
+    <InputGuesser
+      source="d3"
+      parse={(value) => (value.replace(",", "."))}
+      format={(value) => ((value === undefined) ? '': value.toString().replace(".", ","))}
+    />
+
     <InputGuesser source="f"/>
     <InputGuesser source="g"/>
     <InputGuesser source="l"/>
     <InputGuesser source="b"/>
     <InputGuesser source="h"/>
+    <InputGuesser source={"comments"}/>
   </CreateGuesser>
 );
 const FilterEdit = props => (
@@ -102,16 +122,33 @@ const FilterEdit = props => (
       <SelectInput  optionText={((record)=> { return record.name})}/>
     </ReferenceInput >
 
+    <InputGuesser
+      source="d"
+      parse={(value) => (value.replace(",", "."))}
+      format={(value) => ((value === undefined) ? '': value.toString().replace(".", ","))}
+    />
+    <InputGuesser
+      source="d1"
+      parse={(value) => (value.replace(",", "."))}
+      format={(value) => ((value === undefined) ? '': value.toString().replace(".", ","))}
+    />
+    <InputGuesser
+      source="d2"
+      parse={(value) => (value.replace(",", "."))}
+      format={(value) => ((value === undefined) ? '': value.toString().replace(".", ","))}
+    />
+    <InputGuesser
+      source="d3"
+      parse={(value) => (value.replace(",", "."))}
+      format={(value) => ((value === undefined) ? '': value.toString().replace(".", ","))}
+    />
 
-    <InputGuesser source="d"/>
-    <InputGuesser source="d1"/>
-    <InputGuesser source="d2"/>
-    <InputGuesser source="d3"/>
     <InputGuesser source="f"/>
     <InputGuesser source="g"/>
     <InputGuesser source="l"/>
     <InputGuesser source="b"/>
     <InputGuesser source="h"/>
+    <InputGuesser source={"comments"}/>
   </EditGuesser >
 );
 

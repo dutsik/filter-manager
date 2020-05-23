@@ -73,7 +73,8 @@ module.exports = {
         fields: {
           name: "Название",
           filterType:  "Тип Фильтра",
-          filterGroup:  "Группа Фильтра"
+          filterGroup:  "Группа Фильтра",
+          comments: "Комментарий"
         }
       },
       filter_groups: {

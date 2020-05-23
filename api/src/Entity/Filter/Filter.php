@@ -20,6 +20,7 @@ use Doctrine\ORM\Mapping as ORM;
  *     "filterType.id": "exact",
  *     "filterAnalogs.name": "partial",
  *     "filterAnalogs": "exact",
+ *     "name": "partial"
  *     })
  * @ApiFilter(NumericFilter::class)
  * @ApiFilter(RangeFilter::class)
@@ -35,22 +36,22 @@ class Filter
     private $id;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="decimal", nullable=true, precision=8, scale=3)
      */
     private $d;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\Column(type="decimal", nullable=true, precision=8, scale=3)
      */
     private $d1;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\Column(type="decimal", nullable=true, precision=8, scale=3)
      */
     private $d2;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\Column(type="decimal", nullable=true, precision=8, scale=3)
      */
     private $d3;
 
@@ -100,6 +101,11 @@ class Filter
      */
     private $name;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $comments;
+
 
     public function __construct()
     {
@@ -114,48 +120,48 @@ class Filter
         return $this->id;
     }
 
-    public function getD(): ?int
+    public function getD(): ?string
     {
         return $this->d;
     }
 
-    public function setD(int $d): self
+    public function setD(string $d): self
     {
         $this->d = $d;
 
         return $this;
     }
 
-    public function getD1(): ?int
+    public function getD1(): ?string
     {
         return $this->d1;
     }
 
-    public function setD1(?int $d1): self
+    public function setD1(?string $d1): self
     {
         $this->d1 = $d1;
 
         return $this;
     }
 
-    public function getD2(): ?int
+    public function getD2(): ?string
     {
         return $this->d2;
     }
 
-    public function setD2(?int $d2): self
+    public function setD2(?string $d2): self
     {
         $this->d2 = $d2;
 
         return $this;
     }
 
-    public function getD3(): ?int
+    public function getD3(): ?string
     {
         return $this->d3;
     }
 
-    public function setD3(?int $d3): self
+    public function setD3(?string $d3): self
     {
         $this->d3 = $d3;
 
@@ -294,6 +300,18 @@ class Filter
     public function setName(string $name): self
     {
         $this->name = $name;
+
+        return $this;
+    }
+
+    public function getComments(): ?string
+    {
+        return $this->comments;
+    }
+
+    public function setComments(?string $comments): self
+    {
+        $this->comments = $comments;
 
         return $this;
     }
