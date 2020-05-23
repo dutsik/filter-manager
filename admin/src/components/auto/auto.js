@@ -15,7 +15,7 @@ const AutoList = props => (
   <ListGuesser {...props}>
     <FieldGuesser source={"engine"} />
     <ReferenceField  source="model" reference="auto_models">
-      <TextField source="name" />
+      <TextField source="nameWithBrand" />
     </ReferenceField>
     <ReferenceArrayField source="filters" reference="filters">
       <SingleFieldList>
@@ -28,7 +28,7 @@ const AutoShow= props => (
   <ShowGuesser  {...props}>
     <FieldGuesser source={"engine"}  addLabel={true}/>
     <ReferenceField  source="model" reference="auto_models">
-      <TextField source="name" />
+      <TextField source="nameWithBrand" />
     </ReferenceField>
     <ReferenceArrayField source="filters" reference="filters">
       <SingleFieldList>
@@ -45,7 +45,7 @@ const AutoCreate = props => (
       source="model" reference="auto_models"
       filterToQuery={searchText => ({ name: searchText })}
     >
-      <AutocompleteInput optionText="name" />
+      <AutocompleteInput optionText="nameWithBrand" />
     </ReferenceInput>
     <ReferenceArrayInput
       source="filters" reference="filters"    >
@@ -60,7 +60,7 @@ const AutoEdit = props => (
       source="model" reference="auto_models"
       filterToQuery={searchText => ({ name: searchText })}
     >
-      <AutocompleteInput optionText="name" />
+      <AutocompleteInput optionText="nameWithBrand" />
     </ReferenceInput>
     <ReferenceArrayInput
       source="filters" reference="filters"    >

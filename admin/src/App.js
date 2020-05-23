@@ -10,6 +10,7 @@ import FilterType from "./components/filter-type";
 import Filter from "./components/filter";
 import FilterAnalog from "./components/filter-analog";
 import AutoBrand from "./components/auto/auto-brand";
+import AutoType from "./components/auto/auto-type";
 import AutoModel from "./components/auto/auto-model";
 import Auto from "./components/auto/auto";
 
@@ -42,9 +43,9 @@ export default () =>
       />
       <Auto name="autos"
       />
-      <AutoBrand name="auto_types"
-      />
       <AutoBrand name="auto_brands"
+      />
+      <AutoType name="auto_types"
       />
       <AutoModel name="auto_models"
       />

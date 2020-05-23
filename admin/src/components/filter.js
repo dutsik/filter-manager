@@ -8,7 +8,7 @@ import {
   ShowGuesser
 } from "@api-platform/admin";
 import React from "react";
-import { ReferenceInput, AutocompleteInput, NumberInput, TextField, ReferenceField, ReferenceFieldController,ReferenceArrayInput, SelectArrayInput,SelectInput  } from "react-admin";
+import { ReferenceInput, AutocompleteInput, NumberInput, TextField, ReferenceField, ReferenceFieldController,ReferenceArrayInput, SelectArrayInput,SelectInput,useEditController ,useQuery ,ReferenceInputController, Loading, Error } from "react-admin";
 import { useTranslate } from 'react-admin';
 
 
@@ -111,47 +111,48 @@ const FilterCreate = props => (
     <InputGuesser source={"comments"}/>
   </CreateGuesser>
 );
-const FilterEdit = props => (
-  <EditGuesser  {...props}>
-    <InputGuesser source="name" />
+const FilterEdit = props => {
+  return (
+    <EditGuesser  {...props}>
+      <InputGuesser source="name"/>
+      <ReferenceInput
+        source="filterType"
+        reference="filter_types"
+      >
+        <SelectInput  optionText={((record)=> { return record.nameWithGroup})}/>
 
-    <ReferenceInput
-      source="filterType"
-      reference="filter_types"
-    >
-      <SelectInput  optionText={((record)=> { return record.name})}/>
-    </ReferenceInput >
+      </ReferenceInput>
 
-    <InputGuesser
-      source="d"
-      parse={(value) => (value.replace(",", "."))}
-      format={(value) => ((value === undefined) ? '': value.toString().replace(".", ","))}
-    />
-    <InputGuesser
-      source="d1"
-      parse={(value) => (value.replace(",", "."))}
-      format={(value) => ((value === undefined) ? '': value.toString().replace(".", ","))}
-    />
-    <InputGuesser
-      source="d2"
-      parse={(value) => (value.replace(",", "."))}
-      format={(value) => ((value === undefined) ? '': value.toString().replace(".", ","))}
-    />
-    <InputGuesser
-      source="d3"
-      parse={(value) => (value.replace(",", "."))}
-      format={(value) => ((value === undefined) ? '': value.toString().replace(".", ","))}
-    />
+      <InputGuesser
+        source="d"
+        parse={(value) => (value.replace(",", "."))}
+        format={(value) => ((value === undefined) ? '' : value.toString().replace(".", ","))}
+      />
+      <InputGuesser
+        source="d1"
+        parse={(value) => (value.replace(",", "."))}
+        format={(value) => ((value === undefined) ? '' : value.toString().replace(".", ","))}
+      />
+      <InputGuesser
+        source="d2"
+        parse={(value) => (value.replace(",", "."))}
+        format={(value) => ((value === undefined) ? '' : value.toString().replace(".", ","))}
+      />
+      <InputGuesser
+        source="d3"
+        parse={(value) => (value.replace(",", "."))}
+        format={(value) => ((value === undefined) ? '' : value.toString().replace(".", ","))}
+      />
 
-    <InputGuesser source="f"/>
-    <InputGuesser source="g"/>
-    <InputGuesser source="l"/>
-    <InputGuesser source="b"/>
-    <InputGuesser source="h"/>
-    <InputGuesser source={"comments"}/>
-  </EditGuesser >
-);
-
+      <InputGuesser source="f"/>
+      <InputGuesser source="g"/>
+      <InputGuesser source="l"/>
+      <InputGuesser source="b"/>
+      <InputGuesser source="h"/>
+      <InputGuesser source={"comments"}/>
+    </EditGuesser>
+  );
+}
 const Filter = props => (
   <ResourceGuesser {...props}
                    name="filters"

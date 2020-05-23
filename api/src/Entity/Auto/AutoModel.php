@@ -31,6 +31,7 @@ class AutoModel
      * @ORM\Column(type="string", length=255)
      */
     private $name;
+    private $nameWithBrand;
 
     /**
      * @ORM\ManyToOne(targetEntity="AutoBrand", inversedBy="models")
@@ -62,6 +63,11 @@ class AutoModel
     public function getName(): ?string
     {
         return $this->name;
+    }
+
+    public function getNameWithBrand(): ?string
+    {
+        return $this->getBrand()->getName() . ' | ' . $this->name;
     }
 
     public function setName(string $name): self

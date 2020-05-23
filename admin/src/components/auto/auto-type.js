@@ -18,57 +18,58 @@ import {
   SingleFieldList,
   ChipField,
   ReferenceArrayInput,
-  SelectArrayInput
+  SelectArrayInput,
+  SelectInput
 } from "react-admin";
 
-const AutoBrandList = props => (
+const AutoTypeList = props => (
   <ListGuesser {...props}>
     <FieldGuesser source={"name"}/>
     <ReferenceArrayField source="models" reference="auto_models">
       <SingleFieldList>
-        <ChipField  source="name"/>
+        <ChipField  source="nameWithBrand"/>
       </SingleFieldList>
     </ReferenceArrayField>
   </ListGuesser>
 );
-const AutoBrandShow = props => (
+const AutoTypeShow = props => (
   <ShowGuesser  {...props}>
     <FieldGuesser source={"name"} addLabel={true}/>
     <ReferenceArrayField source="models" reference="auto_models">
       <SingleFieldList>
-        <ChipField  source="name"/>
+        <ChipField  source="nameWithBrand"/>
       </SingleFieldList>
     </ReferenceArrayField>
   </ShowGuesser>
 );
 
-const AutoBrandCreate = props => (
+const AutoTypeCreate = props => (
   <CreateGuesser {...props}>
     <InputGuesser source="name"/>
     <ReferenceArrayInput
       source="models" reference="auto_models"
     >
-      <SelectArrayInput  optionText="name"/>
+      <SelectArrayInput  optionText="nameWithBrand"/>
     </ReferenceArrayInput >
   </CreateGuesser>
 );
-const AutoBrandEdit = props => (
+const AutoTypeEdit = props => (
   <EditGuesser  {...props}>
     <InputGuesser source="name"/>
     <ReferenceArrayInput
       source="models" reference="auto_models"
     >
-      <SelectArrayInput  optionText="name"/>
+      <SelectArrayInput  optionText={((record)=> { return 'asd' + record.nameWithBrand})}/>
     </ReferenceArrayInput >
   </EditGuesser>
 );
 
-const AutoBrand = props => (
+const AutoType = props => (
   <ResourceGuesser {...props}
-                   list={AutoBrandList}
-                   show={AutoBrandShow}
-                   create={AutoBrandCreate}
-                   edit={AutoBrandEdit}
+                   list={AutoTypeList}
+                   show={AutoTypeShow}
+                   create={AutoTypeCreate}
+                   edit={AutoTypeEdit}
   />
 )
-export default AutoBrand
+export default AutoType
