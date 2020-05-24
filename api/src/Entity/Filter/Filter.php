@@ -324,7 +324,7 @@ class Filter
      */
     public function getFilterGroup()
     {
-        return $this->getFilterType()->getFilterGroup()-$this->getId();
+        return $this->getFilterType()->getFilterGroup()->getId();
     }
 
 }
