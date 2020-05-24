@@ -1,32 +1,45 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import './styles.scss';
-
 import { connect } from 'react-redux';
-import { list as listFilterGroup } from '../../actions/filtergroup/list';
+import { findById } from '../../utils/dataAccess';
+//import { list as listFilterGroup } from '../../actions/filtergroup/list';
+
+
 
 const FilterTable = ({
     filterGroup,
-    listFilterGroup,
-    autos,  
-    chooseEngine
+    filterList,
+    autoFilters,
+    setChooseFilter
 }) => {
     const [ engineFilters, setEngineFilters ] = useState(null);
-    useEffect(() => {
-        listFilterGroup();
-    }, []);
 
-    console.log('autos', autos);
-    console.log('chooseEngine', chooseEngine);
+    useEffect(() => {
+        const filters = [];
+        autoFilters.forEach((filterId) => {
+            const filterItem = findById(filterId, filterList);
+            if (filterItem) {
+                filters.push(filterItem);
+            }    
+        });
+
+        setEngineFilters(filters);
+    }, [autoFilters])
+
+    console.log('autoFilters', autoFilters);
+    console.log('filtersList', filterList);
+    console.log('filterGroup', filterGroup);
+
     console.log('engineFilters', engineFilters);
 
-    useEffect(() => {
+    /*useEffect(() => {
         autos['hydra:member'].forEach(auto => {
             if(auto['@id'] === chooseEngine) {
                 return setEngineFilters(auto.filters);
             }
         });
-    }, [chooseEngine]);
+    }, [chooseEngine]); */
     
     return (
         <div className="filter-table">
@@ -42,6 +55,13 @@ const FilterTable = ({
                 <tbody>
 
                 <tr>
+                    <td>{engineFilters && 
+                        engineFilters.map(filter => 
+                            <div onClick={() => setChooseFilter(filter)}>
+                                {filter.name}
+                            </div>
+                        )}
+                    </td>
                 </tr>
                 </tbody>
             </table>
@@ -51,14 +71,15 @@ const FilterTable = ({
 
 const mapStateToProps = state => {
     console.log('state', state);
-    const {
-        retrieved: filterGroup
-      } = state.filtergroup.list;
-    return { filterGroup };
+    return { 
+        filterGroup: state.filtergroup.list.retrieved, 
+        filterList: state.filter.list.retrieved
+    };
   };
   
-  const mapDispatchToProps = dispatch => ({
+/*const mapDispatchToProps = dispatch => ({
     listFilterGroup: page => dispatch(listFilterGroup(page)),
-  });
+    listFilter: page => dispatch(listFilterGroup(page))
+  });*/
   
-  export default connect(mapStateToProps, mapDispatchToProps)(FilterTable);
+  export default connect(mapStateToProps, null)(FilterTable);

@@ -39,12 +39,12 @@ const HeaderClient = ({
                     <ul>
                     {retrieved && 
                         retrieved['hydra:member'].map((type) => 
-                            <li><Link to={type['@id']}>{type.name}</Link></li>
+                            <li key={type['@id']} onClick={() => setToggleMenu(false)}><Link to={type['@id']}>{type.name}</Link></li>
                         )
                     }
-                        <li><Link>Применение</Link></li>
+                        <li><Link to="/auto/12">Применение</Link></li>
                         {/*<li><Link>Поиск по аналогу</Link></li>*/}
-                        <li><Link>Размеры</Link></li>
+                        <li><Link to="/auto/13">Размеры</Link></li>
                     </ul>
                     
                 </nav>

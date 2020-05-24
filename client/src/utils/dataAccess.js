@@ -80,3 +80,7 @@ export function extractHubURL(response) {
 
   return matches && matches[1] ? new URL(matches[1], ENTRYPOINT) : null;
 }
+
+export function findById(id, collection) {
+  return collection['hydra:member'].find(item => item['@id'] === id)
+}

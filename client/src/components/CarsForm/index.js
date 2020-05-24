@@ -3,20 +3,17 @@ import { Link } from 'react-router-dom';
 import { useParams } from 'react-router';
 import './styles.scss';
 import { connect } from 'react-redux';
-import { list as listAutoModel } from '../../actions/automodel/list';
-import { list as listAutoBrand } from '../../actions/autobrand/list'
-import { list as listAutos } from '../../actions/auto/list'
 import FilterTable from '../FilterTable';
+import { findById } from '../../utils/dataAccess';
+
 
 const CarsForm = ({
     autoType, 
     autoModel,
     autoBrand,
     autos, 
-    listAutoModel,
-    listAutoBrand,
-    listAutos
 }) => {
+    
     const currentTypeId = useParams();
     const [brands, setBrands] = useState([]);
     const [models, setModels] = useState([]);
@@ -24,18 +21,19 @@ const CarsForm = ({
     const [chooseBrand, setChooseBrand] = useState(null);
     const [chooseModel, setChooseModel] = useState(null);
     const [chooseEngine, setChooseEngine] = useState(null);
+    const [chooseFilter, setChooseFilter] = useState(null);
 
     useEffect(() => {
-        listAutoModel();
-        listAutoBrand();
-        listAutos();
-    }, []);
-
-    useEffect(() => {
+        
         setChooseEngine(null);
     }, [chooseBrand, chooseModel]);
 
     useEffect(() => {
+        setChooseFilter(null);
+    }, [chooseEngine]);
+
+    useEffect(() => {
+        
         if (autoType && autoModel && autoBrand) {
             const typeModelsId = autoType['hydra:member']
             .find(item => item.id === currentTypeId.id);
@@ -59,10 +57,11 @@ const CarsForm = ({
 
             setBrands(typeBrands);
             setModels(typeModels);
+            setChooseBrand(null);
         }
 
 
-    }, [autoType, autoModel, autoBrand]);
+    }, [autoType, autoModel, autoBrand, currentTypeId]);
 
     return (
         <div className="custom-container">
@@ -120,7 +119,7 @@ const CarsForm = ({
                         {autos && autos['hydra:member'].map((auto, index) => {
                             if(auto.model === chooseModel) {
                                 return (
-                                    <div  
+                                    <div className="engine-type" 
                                         onClick={() => setChooseEngine(auto['@id'])}
                                     >
                                         {auto.engine}
@@ -133,10 +132,24 @@ const CarsForm = ({
             }
 
             {chooseBrand && chooseModel && chooseEngine && (
-                <FilterTable 
-                    autos={autos}  
-                    chooseEngine={chooseEngine}
+                <FilterTable
+                    autoFilters={findById(chooseEngine, autos).filters}
+                    setChooseFilter={setChooseFilter} 
                 />
+            )}
+
+            {chooseBrand && chooseModel && chooseEngine && chooseFilter && (
+                <div>
+                    {chooseFilter.d}
+                    {chooseFilter.d1}
+                    {chooseFilter.d2}
+                    {chooseFilter.d3}
+                    {chooseFilter.f}
+                    {chooseFilter.g}
+                    {chooseFilter.l}
+                    {chooseFilter.b}
+                    {chooseFilter.h}
+                </div>
             )}
          
         </div>
@@ -144,27 +157,18 @@ const CarsForm = ({
 }
 
 const mapStateToProps = state => {
-  const { retrieved: autoType } = state.autotype.list;
-
-  const {
-    retrieved: autoModel,
-  } = state.automodel.list;
-
-  const {
-    retrieved: autoBrand
-  } = state.autobrand.list;
-
-  const {
-    retrieved: autos
-  } = state.auto.list;
-
-  return { autoType, autoModel, autoBrand, autos };
+    return { 
+        autoType: state.autotype.list.retrieved,
+        autoModel: state.automodel.list.retrieved,
+        autoBrand: state.autobrand.list.retrieved, 
+        autos: state.auto.list.retrieved 
+    };
 };
 
-const mapDispatchToProps = dispatch => ({
+/*const mapDispatchToProps = dispatch => ({
     listAutoModel: page => dispatch(listAutoModel(page)),
     listAutoBrand: page => dispatch(listAutoBrand(page)),
     listAutos: page => dispatch(listAutos(page))
-});
+});*/
 
-export default connect(mapStateToProps, mapDispatchToProps)(CarsForm);
+export default connect(mapStateToProps, null)(CarsForm);
