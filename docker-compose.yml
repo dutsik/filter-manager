@@ -103,6 +103,7 @@ services:
       - dev-tls
     volumes:
       - ./client:/usr/src/client:rw,cached
+#      - dev-certs:/usr/src/admin/node_modules/webpack-dev-server/ssl
       - dev-certs:/usr/src/client/node_modules/webpack-dev-server/ssl:ro,nocopy
     ports:
       - target: 3000

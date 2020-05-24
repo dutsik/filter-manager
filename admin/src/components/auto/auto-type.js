@@ -18,59 +18,58 @@ import {
   SingleFieldList,
   ChipField,
   ReferenceArrayInput,
-  SelectArrayInput
+  SelectArrayInput,
+  SelectInput
 } from "react-admin";
 
-const FilterGroupList = props => (
+const AutoTypeList = props => (
   <ListGuesser {...props}>
     <FieldGuesser source={"name"}/>
-    <ReferenceArrayField source="filterTypes" reference="filter_types">
+    <ReferenceArrayField source="models" reference="auto_models">
       <SingleFieldList>
-        <ChipField  source="name"/>
+        <ChipField  source="nameWithBrand"/>
       </SingleFieldList>
     </ReferenceArrayField>
   </ListGuesser>
 );
-const FilterGroupShow = props => (
+const AutoTypeShow = props => (
   <ShowGuesser  {...props}>
     <FieldGuesser source={"name"} addLabel={true}/>
-    <ReferenceArrayField source="filterTypes" reference="filter_types">
+    <ReferenceArrayField source="models" reference="auto_models">
       <SingleFieldList>
-        <ChipField  source="name"/>
+        <ChipField  source="nameWithBrand"/>
       </SingleFieldList>
     </ReferenceArrayField>
   </ShowGuesser>
 );
 
-const FilterGroupCreate = props => (
+const AutoTypeCreate = props => (
   <CreateGuesser {...props}>
     <InputGuesser source="name"/>
     <ReferenceArrayInput
-      source="filterTypes"
-      reference="filter_types"
+      source="models" reference="auto_models"
     >
-      <SelectArrayInput  optionText="name"/>
+      <SelectArrayInput  optionText="nameWithBrand"/>
     </ReferenceArrayInput >
   </CreateGuesser>
 );
-const FilterGroupEdit = props => (
+const AutoTypeEdit = props => (
   <EditGuesser  {...props}>
     <InputGuesser source="name"/>
     <ReferenceArrayInput
-      source="filterTypes"
-      reference="filter_types"
+      source="models" reference="auto_models"
     >
-      <SelectArrayInput  optionText="name"/>
+      <SelectArrayInput  optionText={((record)=> { return 'asd' + record.nameWithBrand})}/>
     </ReferenceArrayInput >
   </EditGuesser>
 );
 
-const FilterGroup = props => (
+const AutoType = props => (
   <ResourceGuesser {...props}
-                   list={FilterGroupList}
-                   show={FilterGroupShow}
-                   create={FilterGroupCreate}
-                   edit={FilterGroupEdit}
+                   list={AutoTypeList}
+                   show={AutoTypeShow}
+                   create={AutoTypeCreate}
+                   edit={AutoTypeEdit}
   />
 )
-export default FilterGroup
+export default AutoType

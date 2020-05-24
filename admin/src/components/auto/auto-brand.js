@@ -21,20 +21,20 @@ import {
   SelectArrayInput
 } from "react-admin";
 
-const FilterGroupList = props => (
+const AutoBrandList = props => (
   <ListGuesser {...props}>
     <FieldGuesser source={"name"}/>
-    <ReferenceArrayField source="filterTypes" reference="filter_types">
+    <ReferenceArrayField source="models" reference="auto_models">
       <SingleFieldList>
         <ChipField  source="name"/>
       </SingleFieldList>
     </ReferenceArrayField>
   </ListGuesser>
 );
-const FilterGroupShow = props => (
+const AutoBrandShow = props => (
   <ShowGuesser  {...props}>
     <FieldGuesser source={"name"} addLabel={true}/>
-    <ReferenceArrayField source="filterTypes" reference="filter_types">
+    <ReferenceArrayField source="models" reference="auto_models">
       <SingleFieldList>
         <ChipField  source="name"/>
       </SingleFieldList>
@@ -42,35 +42,33 @@ const FilterGroupShow = props => (
   </ShowGuesser>
 );
 
-const FilterGroupCreate = props => (
+const AutoBrandCreate = props => (
   <CreateGuesser {...props}>
     <InputGuesser source="name"/>
     <ReferenceArrayInput
-      source="filterTypes"
-      reference="filter_types"
+      source="models" reference="auto_models"
     >
       <SelectArrayInput  optionText="name"/>
     </ReferenceArrayInput >
   </CreateGuesser>
 );
-const FilterGroupEdit = props => (
+const AutoBrandEdit = props => (
   <EditGuesser  {...props}>
     <InputGuesser source="name"/>
     <ReferenceArrayInput
-      source="filterTypes"
-      reference="filter_types"
+      source="models" reference="auto_models"
     >
       <SelectArrayInput  optionText="name"/>
     </ReferenceArrayInput >
   </EditGuesser>
 );
 
-const FilterGroup = props => (
+const AutoBrand = props => (
   <ResourceGuesser {...props}
-                   list={FilterGroupList}
-                   show={FilterGroupShow}
-                   create={FilterGroupCreate}
-                   edit={FilterGroupEdit}
+                   list={AutoBrandList}
+                   show={AutoBrandShow}
+                   create={AutoBrandCreate}
+                   edit={AutoBrandEdit}
   />
 )
-export default FilterGroup
+export default AutoBrand

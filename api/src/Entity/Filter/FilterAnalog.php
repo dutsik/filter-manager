@@ -2,7 +2,10 @@
 
 namespace App\Entity\Filter;
 
+use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -10,13 +13,18 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ApiResource()
  * @ORM\Entity(repositoryClass="App\Repository\Filter\FilterAnalogRepository")
+ * @ApiFilter(SearchFilter::class, properties={
+ *     "filter.id": "exact",
+ *     "filter.name": "partial",
+ *     "filter": "exact",
+ *     })
  */
 class FilterAnalog
 {
     /**
      * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="guid")
+     * @ORM\GeneratedValue(strategy="UUID")
      */
     private $id;
 
@@ -26,16 +34,14 @@ class FilterAnalog
     private $name;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Filter\Filter", inversedBy="filterAnalogs")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Filter\Filter", inversedBy="filterAnalogs")
+     * @ORM\JoinColumn(nullable=false)
      */
-    private $filters;
+    private $filter;
 
-    public function __construct()
-    {
-        $this->filters = new ArrayCollection();
-    }
 
-    public function getId(): ?int
+
+    public function getId(): ?string
     {
         return $this->id;
     }
@@ -53,28 +59,21 @@ class FilterAnalog
     }
 
     /**
-     * @return Collection|Filter[]
+     * @return Filter
      */
-    public function getFilters(): Collection
+    public function getFilter(): Filter
     {
-        return $this->filters;
+        return $this->filter;
     }
 
-    public function addFilter(Filter $filter): self
+    /**
+     * @param mixed $filter
+     * @return FilterAnalog
+     */
+    public function setFilter($filter)
     {
-        if (!$this->filters->contains($filter)) {
-            $this->filters[] = $filter;
-        }
-
+        $this->filter = $filter;
         return $this;
     }
 
-    public function removeFilter(Filter $filter): self
-    {
-        if ($this->filters->contains($filter)) {
-            $this->filters->removeElement($filter);
-        }
-
-        return $this;
-    }
 }

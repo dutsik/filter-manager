@@ -30,6 +30,8 @@ class FilterType
      */
     private $name;
 
+    private $nameWithGroup;
+
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Filter\FilterGroup", inversedBy="filterTypes")
      * @ORM\JoinColumn(nullable=false)
@@ -55,6 +57,11 @@ class FilterType
     public function getName(): ?string
     {
         return $this->name;
+    }
+
+    public function getNameWithGroup(): ?string
+    {
+        return $this->getFilterGroup()->getName() . ' | ' . $this->name;
     }
 
     public function setName(string $name): self
