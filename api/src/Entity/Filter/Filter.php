@@ -113,7 +113,6 @@ class Filter
 
     public function __construct()
     {
-        $this->filterType = new ArrayCollection();
         $this->autos = new ArrayCollection();
         $this->filterAnalogs = new ArrayCollection();
     }
@@ -325,7 +324,7 @@ class Filter
      */
     public function getFilterGroup()
     {
-        return $this->getFilterType()->getFilterGroup();
+        return $this->getFilterType()->getFilterGroup()-$this->getId();
     }
 
 }
