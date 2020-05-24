@@ -87,6 +87,7 @@ class Filter
     private $filterType;
 
     /**
+     * @var FilterGroup
      */
     private $filterGroup;
 
@@ -324,7 +325,7 @@ class Filter
      */
     public function getFilterGroup()
     {
-        return $this->getFilterType()->getFilterGroup()->getId();
+        return $this->getFilterType()->getFilterGroup();
     }
 
 }
