@@ -87,6 +87,10 @@ class Filter
     private $filterType;
 
     /**
+     */
+    private $filterGroup;
+
+    /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Auto\Auto", inversedBy="filters")
      */
     private $autos;
@@ -314,6 +318,14 @@ class Filter
         $this->comments = $comments;
 
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFilterGroup()
+    {
+        return $this->getFilterType()->getFilterGroup();
     }
 
 }
