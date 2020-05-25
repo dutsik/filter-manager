@@ -33,6 +33,14 @@ const CarsForm = ({
     }, [chooseEngine]);
 
     useEffect(() => {
+        console.log('CHECKCEKC')
+        setChooseBrand(null);
+        setChooseModel(null);
+        setChooseEngine(null);
+        setChooseFilter(null);
+    }, [currentTypeId]);
+
+    useEffect(() => {
         
         if (autoType && autoModel && autoBrand) {
             const typeModelsId = autoType['hydra:member']
@@ -130,28 +138,37 @@ const CarsForm = ({
                     </div>
                 )
             }
+            <div className="filter-info-container">
+                {chooseBrand && chooseModel && chooseEngine && (
+                    <FilterTable
+                        autoFilters={findById(chooseEngine, autos).filters}
+                        setChooseFilter={setChooseFilter} 
+                    />
+                )}
 
-            {chooseBrand && chooseModel && chooseEngine && (
-                <FilterTable
-                    autoFilters={findById(chooseEngine, autos).filters}
-                    setChooseFilter={setChooseFilter} 
-                />
-            )}
+                {chooseBrand && chooseModel && chooseEngine && chooseFilter && (
+                    <div className="filter-description">
+                        <div className="filter-description__title">{chooseFilter.name}</div>
+                        <div className="filter-description__info">
+                            <div className="info-left-column">
+                                <div>D: {chooseFilter.d}</div>
+                                <div>D1: {chooseFilter.d1}</div>
+                                <div>D2: {chooseFilter.d2}</div>
+                                <div>D3: {chooseFilter.d3}</div>
+                                <div>F: {chooseFilter.f}</div>
+                            </div>
+                            <div className="info-right-column">
+                                <div>G: {chooseFilter.g}</div>
+                                <div>L: {chooseFilter.l}</div>
+                                <div>B: {chooseFilter.b}</div>
+                                <div>H: {chooseFilter.h}</div>
+                            </div>
+                        </div>
 
-            {chooseBrand && chooseModel && chooseEngine && chooseFilter && (
-                <div>
-                    {chooseFilter.d}
-                    {chooseFilter.d1}
-                    {chooseFilter.d2}
-                    {chooseFilter.d3}
-                    {chooseFilter.f}
-                    {chooseFilter.g}
-                    {chooseFilter.l}
-                    {chooseFilter.b}
-                    {chooseFilter.h}
-                </div>
-            )}
-         
+                    </div>
+                )}
+
+            </div>         
         </div>
     )
 }

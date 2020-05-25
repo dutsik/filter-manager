@@ -7,6 +7,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 // Import your reducers and routes here
 import HeaderClient from './components/HeaderClient';
 import CarsForm from './components/CarsForm';
+import InsizeForm from './components/InsizeForm';
 import './main.scss'
 
 import { list as getAutoModels } from './actions/automodel/list';
@@ -35,6 +36,7 @@ const App = ({
             <HeaderClient />
             <Switch>    
                 <Route path="/auto_types/:id" component={CarsForm} exact/>
+                <Route path="/insize" component={InsizeForm} exact/>
 
                 {/* Add your routes here */}
             </Switch>

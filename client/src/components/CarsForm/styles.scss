@@ -1,5 +1,5 @@
 .cars-form {
-    margin-top: 40px;
+    margin: 40px 0px;
     padding: 16px;
     border: 2px solid #3f3e43;
     border-radius: 8px;
@@ -36,4 +36,37 @@
         text-decoration: underline;
     }
     
+}
+.filter-description {
+    display: flex;
+    flex-direction: column;
+    border: 2px solid #3f3e43;
+    padding: 16px;
+    width: 30%;
+    @media (max-width: 992px) {
+        margin-top: 20px;  
+    }
+    &__title {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        padding-bottom: 16px;
+        border-bottom: 1px solid #3f3e43;
+    }
+    &__info {
+        padding: 10px 20px;
+        display: flex;
+        width: 100%;
+        justify-content: space-between;
+
+    }
+}
+.filter-info-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    @media (max-width: 992px) {
+        flex-direction: column;  
+    }
 }

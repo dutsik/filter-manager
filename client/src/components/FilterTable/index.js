@@ -3,15 +3,16 @@ import { Link } from 'react-router-dom';
 import './styles.scss';
 import { connect } from 'react-redux';
 import { findById } from '../../utils/dataAccess';
+import { list as getFilterList } from '../../actions/filter/list';
 //import { list as listFilterGroup } from '../../actions/filtergroup/list';
-
 
 
 const FilterTable = ({
     filterGroup,
     filterList,
     autoFilters,
-    setChooseFilter
+    setChooseFilter,
+    getFilterList
 }) => {
     const [ engineFilters, setEngineFilters ] = useState(null);
 
@@ -23,10 +24,10 @@ const FilterTable = ({
                 filters.push(filterItem);
             }    
         });
-
         setEngineFilters(filters);
-    }, [autoFilters])
 
+        
+    }, [autoFilters]);
     console.log('autoFilters', autoFilters);
     console.log('filtersList', filterList);
     console.log('filterGroup', filterGroup);
@@ -44,42 +45,50 @@ const FilterTable = ({
     return (
         <div className="filter-table">
             <table>
-                <thead>
-                <th>
-                    {filterGroup && filterGroup['hydra:member'].map(group => 
-                        <td>{group.name}</td>
-                    )}
-                    
-                </th>
-                </thead>
-                <tbody>
 
                 <tr>
-                    <td>{engineFilters && 
-                        engineFilters.map(filter => 
-                            <div onClick={() => setChooseFilter(filter)}>
-                                {filter.name}
-                            </div>
-                        )}
-                    </td>
+                    {filterGroup && filterGroup['hydra:member'].map(group => 
+                        <th>{group.name}</th>
+                    )}
+                    
                 </tr>
-                </tbody>
+
+
+                
+                <tr>
+                    {filterGroup && engineFilters && filterGroup['hydra:member'].map(group => (
+                        <td>
+                            {engineFilters.map(filter => {
+                                if (group['@id'] === filter.filterGroup)
+                                    return (
+                                        <div 
+                                            className="filter-name"
+                                            onClick={() => setChooseFilter(filter)}
+                                        >
+                                            {filter.name}
+                                        </div>
+                                    )
+                                return null;
+                                }).filter(index => !!index)
+                            }
+                        </td> 
+                    ))}
+                </tr>
+
             </table>
         </div>
     )
 }
 
 const mapStateToProps = state => {
-    console.log('state', state);
     return { 
         filterGroup: state.filtergroup.list.retrieved, 
         filterList: state.filter.list.retrieved
     };
   };
   
-/*const mapDispatchToProps = dispatch => ({
-    listFilterGroup: page => dispatch(listFilterGroup(page)),
-    listFilter: page => dispatch(listFilterGroup(page))
-  });*/
+const mapDispatchToProps = dispatch => ({
+    getFilterList: page => dispatch(getFilterList(page))
+  });
   
-  export default connect(mapStateToProps, null)(FilterTable);
+  export default connect(mapStateToProps, mapDispatchToProps)(FilterTable);

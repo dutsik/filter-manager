@@ -19,3 +19,9 @@
         border: 1px solid grey;
     }
 }
+.filter-name {
+    cursor: pointer;
+    &:hover {
+        text-decoration: underline;
+    }
+}

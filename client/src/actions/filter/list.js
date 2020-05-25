@@ -19,12 +19,12 @@ export function success(retrieved) {
   return { type: 'FILTER_LIST_SUCCESS', retrieved };
 }
 
-export function list(page = 'filters') {
+export function list(page) {
   return dispatch => {
     dispatch(loading(true));
     dispatch(error(''));
 
-    fetch(`${API}${page}?page=2`)
+    fetch(`${API}filters${page ? `?page=${page}` : ''}`)
       .then(response =>
         response
           .json()
