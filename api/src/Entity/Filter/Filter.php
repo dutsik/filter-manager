@@ -87,6 +87,11 @@ class Filter
     private $filterType;
 
     /**
+     * @var FilterGroup
+     */
+    private $filterGroup;
+
+    /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Auto\Auto", inversedBy="filters")
      */
     private $autos;
@@ -109,7 +114,6 @@ class Filter
 
     public function __construct()
     {
-        $this->filterType = new ArrayCollection();
         $this->autos = new ArrayCollection();
         $this->filterAnalogs = new ArrayCollection();
     }
@@ -314,6 +318,14 @@ class Filter
         $this->comments = $comments;
 
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFilterGroup()
+    {
+        return $this->getFilterType()->getFilterGroup();
     }
 
 }
