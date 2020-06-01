@@ -5,13 +5,14 @@ namespace App\Entity\Filter;
 use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ApiResource()
+ * @ApiResource(attributes={"order"={"name": "ASC"}})
  * @ORM\Entity(repositoryClass="App\Repository\Filter\FilterAnalogRepository")
  * @ApiFilter(SearchFilter::class, properties={
  *     "name": "partial",
@@ -19,6 +20,7 @@ use Doctrine\ORM\Mapping as ORM;
  *     "filter.name": "partial",
  *     "filter": "exact",
  *     })
+ * @ApiFilter(OrderFilter::class)
  */
 class FilterAnalog
 {

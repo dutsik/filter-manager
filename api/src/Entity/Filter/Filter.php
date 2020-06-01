@@ -8,13 +8,14 @@ use App\Entity\Auto\Auto;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\NumericFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\RangeFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ApiResource()
+ * @ApiResource(attributes={"order"={"name": "ASC"}})
  * @ORM\Entity(repositoryClass="App\Repository\Filter\FilterRepository")
  * @ApiFilter(SearchFilter::class, properties={
  *     "filterType.id": "exact",
@@ -24,6 +25,7 @@ use Doctrine\ORM\Mapping as ORM;
  *     })
  * @ApiFilter(NumericFilter::class)
  * @ApiFilter(RangeFilter::class)
+ * @ApiFilter(OrderFilter::class)
  *
  */
 class Filter

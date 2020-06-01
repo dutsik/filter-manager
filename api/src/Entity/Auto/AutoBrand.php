@@ -10,7 +10,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ApiResource()
+ * @ApiResource(attributes={"order"={"name": "ASC"}})
  * @ORM\Entity(repositoryClass="App\Repository\Auto\AutoBrandRepository")
  * @ApiFilter(SearchFilter::class, properties={"name": "ipartial"})
  */

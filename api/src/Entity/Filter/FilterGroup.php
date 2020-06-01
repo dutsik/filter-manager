@@ -8,7 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ApiResource()
+ * @ApiResource(attributes={"order"={"name": "ASC"}})
  * @ORM\Entity(repositoryClass="App\Repository\Filter\FilterGroupRepository")
  */
 class FilterGroup

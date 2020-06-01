@@ -11,7 +11,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ApiResource()
+ * @ApiResource(attributes={"order"={"engine": "ASC"}})
  * @ORM\Entity(repositoryClass="App\Repository\Auto\AutoRepository")
  * @ApiFilter(SearchFilter::class, properties={
  *     "engine": "exact",
