@@ -11,7 +11,7 @@ import React from "react";
 import { ReferenceInput, AutocompleteInput, TextField, ReferenceField } from "react-admin";
 
 const AutoModelList = props => (
-  <ListGuesser {...props}>
+  <ListGuesser {...props}  sort={{ field: 'name', order: 'ASC' }}>
     <FieldGuesser source={"name"} />
     <ReferenceField  source="brand" reference="auto_brands">
       <TextField source="name" />

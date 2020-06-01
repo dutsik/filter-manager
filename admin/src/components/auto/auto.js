@@ -12,9 +12,9 @@ import { ReferenceInput, ReferenceArrayField, SingleFieldList, ChipField,
   ReferenceArrayInput, SelectArrayInput,  AutocompleteInput, AutocompleteArrayInput , TextField, ReferenceField } from "react-admin";
 
 const AutoList = props => (
-  <ListGuesser {...props}>
+  <ListGuesser {...props}  sort={{ field: 'engine', order: 'ASC' }}>
     <FieldGuesser source={"engine"} />
-    <ReferenceField  source="model" reference="auto_models">
+    <ReferenceField  source="model" reference="auto_models" sortBy="model.nameWithBrand">
       <TextField source="nameWithBrand" />
     </ReferenceField>
     <ReferenceArrayField source="filters" reference="filters">

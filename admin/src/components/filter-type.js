@@ -11,7 +11,7 @@ import React from "react";
 import { ReferenceInput, AutocompleteInput, TextField, ReferenceField } from "react-admin";
 
 const FilterTypeList = props => (
-  <ListGuesser {...props}>
+  <ListGuesser {...props}  sort={{ field: 'name', order: 'ASC' }}>
     <FieldGuesser source={"name"} />
     <ReferenceField  source="filterGroup" reference="filter_groups">
       <TextField source="name" />
