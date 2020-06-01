@@ -20,6 +20,8 @@ import autobrand from './reducers/autobrand/';
 import filtergroup from './reducers/filtergroup';
 import filter from './reducers/filter';
 import auto from './reducers/auto/';
+import filtertype from './reducers/filtertype'
+import filteranalog from './reducers/filteranalog'
 
 const history = createBrowserHistory();
 const store = createStore(
@@ -31,7 +33,9 @@ const store = createStore(
     autobrand,
     auto,
     filtergroup,
-    filter
+    filter,
+    filtertype,
+    filteranalog
 
     /* Add your reducers here */
   }),

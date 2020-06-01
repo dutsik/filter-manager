@@ -42,7 +42,7 @@ const HeaderClient = ({
                             <li key={type['@id']} onClick={() => setToggleMenu(false)}><Link to={type['@id']}>{type.name}</Link></li>
                         )
                     }
-                        <li><Link to="/insize">Применение</Link></li>
+                        <li><Link to="/analogs">Поиск по аналогу</Link></li>
                         {/*<li><Link>Поиск по аналогу</Link></li>*/}
                         <li><Link to="/insize">Размеры</Link></li>
                     </ul>

@@ -24,7 +24,7 @@ export function list(page) {
     dispatch(loading(true));
     dispatch(error(''));
 
-    fetch(`${API}filters${page ? `?page=${page}` : ''}`)
+    fetch(`${API}filters?perPage=1000`)
       .then(response =>
         response
           .json()

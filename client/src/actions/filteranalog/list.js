@@ -20,12 +20,12 @@ export function success(retrieved) {
   return { type: 'FILTERANALOG_LIST_SUCCESS', retrieved };
 }
 
-export function list(page = 'filter_analogs') {
+export function list(name) {
   return dispatch => {
     dispatch(loading(true));
     dispatch(error(''));
 
-    fetch(`${API}${page}`)
+    fetch(`${API}filter_analogs?name=${name}&perPage=1000`)
       .then(response =>
         response
           .json()

@@ -24,7 +24,7 @@ export function list(page = 'filter_groups') {
     dispatch(loading(true));
     dispatch(error(''));
 
-    fetch(`${API}${page}`)
+    fetch(`${API}${page}?perPage=1000`)
       .then(response =>
         response
           .json()
