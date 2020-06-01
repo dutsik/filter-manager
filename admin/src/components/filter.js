@@ -15,8 +15,8 @@ import { useTranslate } from 'react-admin';
 
 const FilterList = props => {
   const translate = useTranslate();
-  return (<ListGuesser {...props}>
-      <FieldGuesser source={"name"}/>
+  return (<ListGuesser {...props} sort={{ field: 'name', order: 'ASC' }}>
+      <FieldGuesser source={"name"} />
       <ReferenceFieldController label={translate('resources.filters.fields.filterGroup')} reference="filter_types" source="filterType"
                                 link={false}>
         {({referenceRecord, ...props}) => (

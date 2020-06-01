@@ -9,12 +9,12 @@ import {
 } from "@api-platform/admin";
 import React from "react";
 import { ReferenceInput, ReferenceArrayField, SingleFieldList, ChipField,
-  ReferenceArrayInput, SelectArrayInput,  AutocompleteInput, TextField, ReferenceField } from "react-admin";
+  ReferenceArrayInput, SelectArrayInput,  AutocompleteInput, AutocompleteArrayInput , TextField, ReferenceField } from "react-admin";
 
 const AutoList = props => (
-  <ListGuesser {...props}>
+  <ListGuesser {...props}  sort={{ field: 'engine', order: 'ASC' }}>
     <FieldGuesser source={"engine"} />
-    <ReferenceField  source="model" reference="auto_models">
+    <ReferenceField  source="model" reference="auto_models" sortBy="model.nameWithBrand">
       <TextField source="nameWithBrand" />
     </ReferenceField>
     <ReferenceArrayField source="filters" reference="filters">
@@ -48,8 +48,10 @@ const AutoCreate = props => (
       <AutocompleteInput optionText="nameWithBrand" />
     </ReferenceInput>
     <ReferenceArrayInput
-      source="filters" reference="filters"    >
-      <SelectArrayInput  optionText="name"/>
+      source="filters" reference="filters"
+      filterToQuery={searchText => ({ name: searchText })}
+    >
+      <AutocompleteArrayInput  optionText="name" />
     </ReferenceArrayInput >
   </CreateGuesser>
 );
@@ -63,8 +65,10 @@ const AutoEdit = props => (
       <AutocompleteInput optionText="nameWithBrand" />
     </ReferenceInput>
     <ReferenceArrayInput
-      source="filters" reference="filters"    >
-      <SelectArrayInput  optionText="name"/>
+      source="filters" reference="filters"
+      filterToQuery={searchText => ({ name: searchText })}
+    >
+      <AutocompleteArrayInput  optionText="name" />
     </ReferenceArrayInput >
   </EditGuesser >
 );

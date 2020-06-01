@@ -22,7 +22,7 @@ import {
 } from "react-admin";
 
 const FilterGroupList = props => (
-  <ListGuesser {...props}>
+  <ListGuesser {...props}  sort={{ field: 'name', order: 'ASC' }}>
     <FieldGuesser source={"name"}/>
     <ReferenceArrayField source="filterTypes" reference="filter_types">
       <SingleFieldList>

@@ -5,18 +5,20 @@ namespace App\Entity\Auto;
 use ApiPlatform\Core\Annotation\ApiFilter;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
  use App\Entity\Filter\Filter;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ApiResource()
+ * @ApiResource(attributes={"order"={"engine": "ASC"}})
  * @ORM\Entity(repositoryClass="App\Repository\Auto\AutoRepository")
  * @ApiFilter(SearchFilter::class, properties={
  *     "engine": "exact",
  *     "model.id": "exact"
  * })
+ * @ApiFilter(OrderFilter::class, properties={"model.nameWithBrand", "engine"})
  */
 class Auto
 {

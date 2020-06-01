@@ -23,7 +23,7 @@ import {
 } from "react-admin";
 
 const AutoTypeList = props => (
-  <ListGuesser {...props}>
+  <ListGuesser {...props}  sort={{ field: 'name', order: 'ASC' }}>
     <FieldGuesser source={"name"}/>
     <ReferenceArrayField source="models" reference="auto_models">
       <SingleFieldList>
