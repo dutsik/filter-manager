@@ -14,6 +14,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ApiResource()
  * @ORM\Entity(repositoryClass="App\Repository\Filter\FilterAnalogRepository")
  * @ApiFilter(SearchFilter::class, properties={
+ *     "name": "partial",
  *     "filter.id": "exact",
  *     "filter.name": "partial",
  *     "filter": "exact",
