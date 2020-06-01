@@ -48,8 +48,10 @@ const AutoCreate = props => (
       <AutocompleteInput optionText="nameWithBrand" />
     </ReferenceInput>
     <ReferenceArrayInput
-      source="filters" reference="filters"    >
-      <SelectArrayInput  optionText="name"/>
+      source="filters" reference="filters"
+      filterToQuery={searchText => ({ name: searchText })}
+    >
+      <AutocompleteInput optionText="name" />
     </ReferenceArrayInput >
   </CreateGuesser>
 );
@@ -63,8 +65,10 @@ const AutoEdit = props => (
       <AutocompleteInput optionText="nameWithBrand" />
     </ReferenceInput>
     <ReferenceArrayInput
-      source="filters" reference="filters"    >
-      <SelectArrayInput  optionText="name"/>
+      source="filters" reference="filters"
+      filterToQuery={searchText => ({ name: searchText })}
+    >
+      <AutocompleteInput optionText="name" />
     </ReferenceArrayInput >
   </EditGuesser >
 );
