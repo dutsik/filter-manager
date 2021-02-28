@@ -14,8 +14,8 @@ use Doctrine\ORM\Mapping as ORM;
  * @ApiResource(attributes={"order"={"name": "ASC"}})
  * @ORM\Entity(repositoryClass="App\Repository\Auto\AutoModelRepository")
  * @ApiFilter(SearchFilter::class, properties={
- *     "brand.id": "exact",
- *     "type.id": "exact"
+ *     "brand": "exact",
+ *     "type": "exact"
  *     })
  */
 class AutoModel

@@ -14,6 +14,13 @@ import AutoType from "./components/auto/auto-type";
 import AutoModel from "./components/auto/auto-model";
 import Auto from "./components/auto/auto";
 
+
+/* Providers */
+import authProvider from './providers/authProvider';
+import dataProvider from './providers/dataProvider'
+import entrypoint from './providers/entrypoint';
+
+
 const messages = {
   be: { ...belarusianMessages, ...domainMessages.be },
   ru: { ...russianMessages, ...domainMessages.ru },
@@ -33,7 +40,13 @@ export default () =>
 
 
   return (
-    <HydraAdmin i18nProvider={i18nProvider} entrypoint={process.env.REACT_APP_API_ENTRYPOINT}>
+    <HydraAdmin
+      i18nProvider={i18nProvider}
+      dataProvider={dataProvider()}
+      // authProvider={authProvider}
+      entrypoint={entrypoint}
+
+    >
       <Filter name="filters" />
       <FilterGroup name="filter_groups"
       />

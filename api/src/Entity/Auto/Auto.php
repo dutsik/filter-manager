@@ -3,6 +3,7 @@
 namespace App\Entity\Auto;
 
 use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Annotation\ApiProperty;
 use ApiPlatform\Core\Annotation\ApiResource;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\OrderFilter;
@@ -59,6 +60,16 @@ class Auto
     public function getModel(): ?AutoModel
     {
         return $this->model;
+    }
+
+    /**
+     * @ApiProperty
+     *
+     * @return AutoBrand|null
+     */
+    public function getBrand(): ?AutoBrand
+    {
+        return $this->model->getBrand();
     }
 
     public function setModel(?AutoModel $model): self

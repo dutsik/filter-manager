@@ -9,7 +9,7 @@ import {
 } from "@api-platform/admin";
 import React from "react";
 import { ReferenceInput, ReferenceArrayField, SingleFieldList, ChipField,
-  ReferenceArrayInput, SelectArrayInput,  AutocompleteInput, AutocompleteArrayInput , TextField, ReferenceField } from "react-admin";
+  ReferenceArrayInput, FormDataConsumer,  AutocompleteInput, AutocompleteArrayInput , TextField, ReferenceField } from "react-admin";
 
 const AutoList = props => (
   <ListGuesser {...props}  sort={{ field: 'engine', order: 'ASC' }}>
@@ -42,11 +42,25 @@ const AutoCreate = props => (
   <CreateGuesser {...props}>
     <InputGuesser source="engine" />
     <ReferenceInput
-      source="model" reference="auto_models"
+      source="brand" reference="auto_brands"
+      perPage={1000}
       filterToQuery={searchText => ({ name: searchText })}
     >
-      <AutocompleteInput optionText="nameWithBrand" />
+      <AutocompleteInput optionText="name" />
     </ReferenceInput>
+    <FormDataConsumer>
+      {({getSource, formData}) => {
+        return formData.brand &&
+          <ReferenceInput
+            source="model" reference="auto_models"
+            perPage={1000}
+            filter={{brand: formData.brand}}
+            filterToQuery={searchText => ({nameWithBrand: searchText})}
+          >
+            <AutocompleteInput optionText="nameWithBrand"/>
+          </ReferenceInput>
+      }}
+    </FormDataConsumer>
     <ReferenceArrayInput
       source="filters" reference="filters"
       filterToQuery={searchText => ({ name: searchText })}
@@ -59,11 +73,25 @@ const AutoEdit = props => (
   <EditGuesser  {...props}>
     <InputGuesser source="engine" />
     <ReferenceInput
-      source="model" reference="auto_models"
+      source="brand" reference="auto_brands"
+      perPage={1000}
       filterToQuery={searchText => ({ name: searchText })}
     >
-      <AutocompleteInput optionText="nameWithBrand" />
+      <AutocompleteInput optionText="name" />
     </ReferenceInput>
+    <FormDataConsumer>
+      {({getSource, formData}) => {
+        return formData.brand &&
+          <ReferenceInput
+            source="model" reference="auto_models"
+            perPage={1000}
+            filter={{brand: formData.brand}}
+            filterToQuery={searchText => ({nameWithBrand: searchText})}
+          >
+            <AutocompleteInput optionText="nameWithBrand"/>
+          </ReferenceInput>
+      }}
+    </FormDataConsumer>
     <ReferenceArrayInput
       source="filters" reference="filters"
       filterToQuery={searchText => ({ name: searchText })}
