@@ -102,6 +102,8 @@ module.exports = {
         name: "Транспортные средства",
         fields: {
           name: "Тип двигателя",
+          brand:  "Марка",
+          engine:  "Двигатель",
           model:  "Модель",
           filters:  "Фильтра",
         }
