@@ -38,6 +38,7 @@ const AutoModelCreate = props => (
     <InputGuesser source="name" />
     <ReferenceInput
       source="brand" reference="auto_brands"
+      perPage={1000}
       filterToQuery={searchText => ({ brand: searchText })}
     >
       <AutocompleteInput optionText="name" />
@@ -55,6 +56,7 @@ const AutoModelEdit = props => (
     <InputGuesser source="name" />
     <ReferenceInput
       source="brand" reference="auto_brands"
+      perPage={1000}
       filterToQuery={searchText => ({ name: searchText })}
     >
       <AutocompleteInput optionText="name" />
