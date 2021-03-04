@@ -10,10 +10,71 @@ import {
 import React from "react";
 import { ReferenceInput, ReferenceArrayField, SingleFieldList, ChipField,
   ReferenceArrayInput,
+  Filter,
+  SelectInput,
   FormDataConsumer,  AutocompleteInput, AutocompleteArrayInput , TextField, ReferenceField } from "react-admin";
 
+const AutoFilters = props => {
+  console.log(props.filterValues)
+  return (
+    <Filter {...props}>
+      <ReferenceInput
+        alwaysOn
+        resettable
+        source="brand"
+        reference="auto_brands"
+        perPage={100}
+        onChange={
+          (e) => {
+            props.setFilters(
+              {
+                model:{brand:e.target?.value ?? null},
+                brand:e.target?.value ?? null
+              }
+            )
+
+          }
+        }
+      >
+        <SelectInput optionText={"name"}/>
+      </ReferenceInput>
+      {  props.filterValues.brand &&
+      <ReferenceInput
+        key={props.filterValues.brand}
+        alwaysOn={true}
+        allowEmpty={true}
+        resettable={true}
+        reference={"auto_models"}
+        source={"model"}
+        filter={{brand: props.filterValues.brand}}
+        perPage={100}
+        onChange={
+          (e) => {
+
+            props.setFilters(
+              {
+                model:(e.target?.value ? e.target.value : {brand:props.filterValues.brand}),
+                brand:props.filterValues.brand
+              }
+            )
+
+          }
+        }
+
+      >
+        <SelectInput optionText={(p)=>{ return p.name}}
+        />
+      </ReferenceInput>
+      }
+
+
+    </Filter>
+  )
+
+}
+
 const AutoList = props => (
-  <ListGuesser {...props}  sort={{ field: 'engine', order: 'ASC' }}>
+  <ListGuesser {...props}  sort={{ field: 'engine', order: 'ASC' }} filters={<AutoFilters/>}>
     <FieldGuesser source={"engine"} />
     <ReferenceField  source="model" reference="auto_models" sortBy="model.nameWithBrand">
       <TextField source="nameWithBrand" />

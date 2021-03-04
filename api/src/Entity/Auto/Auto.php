@@ -19,6 +19,7 @@ use Doctrine\ORM\Mapping as ORM;
  *     "engine": "exact",
  *     "model.id": "exact"
  * })
+ * @ApiFilter(SearchFilter::class, properties={"model": "exact", "model.brand": "exact"})
  * @ApiFilter(OrderFilter::class, properties={"model.nameWithBrand", "engine"})
  */
 class Auto

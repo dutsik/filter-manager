@@ -13,6 +13,7 @@ import AutoBrand from "./components/auto/auto-brand";
 import AutoType from "./components/auto/auto-type";
 import AutoModel from "./components/auto/auto-model";
 import Auto from "./components/auto/auto";
+import {List, Pagination} from "react-admin";
 
 
 /* Providers */
@@ -28,7 +29,13 @@ const messages = {
 
 const i18nProvider = polyglotI18nProvider(locale => messages["ru"]);
 
+List.defaultProps = {
+  perPage: 25,
+};
 
+Pagination.defaultProps = {
+  rowsPerPageOptions: [10, 25, 50, 100],
+};
 
 export default () =>
 {

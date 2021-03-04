@@ -8,10 +8,29 @@ import {
   ShowGuesser
 } from "@api-platform/admin";
 import React from "react";
-import { ReferenceInput, AutocompleteInput, TextField, ReferenceField } from "react-admin";
+import { ReferenceInput,
+  Filter,
+  SelectInput,
+  AutocompleteInput, TextField, ReferenceField } from "react-admin";
+const ModelFIlters = props => {
+  console.log(props.filterValues)
+  return (
+    <Filter {...props}>
+      <ReferenceInput
+        alwaysOn
+        resettable
+        source="brand"
+        reference="auto_brands"
+        perPage={100}
+      >
+        <SelectInput optionText={"name"}/>
+      </ReferenceInput>
+    </Filter>
+  )
 
+}
 const AutoModelList = props => (
-  <ListGuesser {...props}  sort={{ field: 'name', order: 'ASC' }}>
+  <ListGuesser {...props}  sort={{ field: 'name', order: 'ASC' }} filters={<ModelFIlters/>}>
     <FieldGuesser source={"name"} />
     <ReferenceField  source="brand" reference="auto_brands">
       <TextField source="name" />
